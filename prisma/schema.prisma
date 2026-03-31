@@ -26,6 +26,7 @@ model Filme {
   generoId     Int
   duracaoMin   Int     @default(0)
   imagem       String
+  desconto      Decimal @db.Decimal(5, 2) @default(0)
   genero   Genero  @relation(fields: [generoId], references: [id])
 
   @@map("filmes")
@@ -40,4 +41,6 @@ model Cliente {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt  
   @@map("clientes")
-}
+} 
+
+
