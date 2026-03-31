@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Genero {
+  id     Int     @id @default(autoincrement())
+  nome   String  @db.VarChar(50)
+  filmes Filme[]
+
+  @@map("generos")
+}
+
+model Filme {
+  id           Int     @id @default(autoincrement())
+  nome         String  @db.VarChar(100)
+  preco        Decimal @db.Decimal(10, 2)
+  sinopse      String
+  ator         String  @db.VarChar(100)
+  pais         String  @db.VarChar(50)
+  idioma       String  @db.VarChar(30)
+  generoId     Int
+  duracaoMin   Int     @default(0)
+  imagem       String
+  genero   Genero  @relation(fields: [generoId], references: [id])
+
+  @@map("filmes")
+}
+
+model Cliente {
+  id            String   @db.VarChar(36) @id @default(uuid())
+  nome          String   @db.VarChar(60)
+  email         String   @db.VarChar(40)
+  senha         String   @db.VarChar(60)   // senha deve ser varchar(60)
+  cidade        String   @db.VarChar(30) 
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt  
+  @@map("clientes")
+}
